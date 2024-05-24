@@ -1,0 +1,23 @@
+---
+import type { z } from "astro:content"
+import { bookSchema } from "./seo"
+
+type Props = {
+	book: z.infer<typeof bookSchema>
+}
+const { book } = Astro.props
+---
+
+{book.authors && book?.authors.map((author) => <meta property="book:author" content={author} />)}
+{book.isbn && <meta property="book:isbn" content={book.isbn} />}
+{
+	book.releaseDate && (
+		<meta
+			property="book:release_date"
+			content={
+				typeof book.releaseDate === "string" ? book.releaseDate : book.releaseDate.toISOString()
+			}
+		/>
+	)
+}
+{book.tags && book?.tags.map((tag) => <meta property="book:tag" content={tag} />)}

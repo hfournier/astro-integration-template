@@ -1,0 +1,14 @@
+---
+import type { z } from "astro:content"
+import { ogVideoSchema } from "./seo"
+
+type Props = {
+	video: z.infer<typeof ogVideoSchema>
+}
+const { video } = Astro.props
+---
+
+{video.url && <meta property="og:video" content={video.url} />}
+{video.mimeType && <meta property="og:video:type" content={video.mimeType} />}
+{video.height && <meta property="og:video:height" content={video.height.toString()} />}
+{video.width && <meta property="og:video:width" content={video.width.toString()} />}

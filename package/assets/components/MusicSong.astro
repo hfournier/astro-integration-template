@@ -1,0 +1,25 @@
+---
+import { z } from "astro/zod"
+import { musicSongSchema } from "./seo"
+
+type Props = {
+	music: z.infer<typeof musicSongSchema>
+}
+const { music } = Astro.props
+---
+
+{music.duration && <meta property="music:duration" content={music.duration.toString()} />}
+{
+	music.albums &&
+		music.albums.map((album) => (
+			<>
+				<meta property="music:album" content={album.url} />
+				{album.disc && <meta property="music:album:disc" content={album.disc.toString()} />}
+				{album.track && <meta property="music:album:track" content={album.track.toString()} />}
+			</>
+		))
+}
+{
+	music.musicians &&
+		music.musicians.map((musician) => <meta property="music:musician" content={musician} />)
+}

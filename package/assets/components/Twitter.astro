@@ -1,0 +1,27 @@
+---
+import { getImage } from "astro:assets"
+import { z } from "astro:content"
+import { twitterSchema } from "./seo"
+
+type Props = {
+	twitter: z.infer<ReturnType<typeof twitterSchema>>
+}
+const { twitter } = Astro.props
+const twitterImage = twitter.image
+	? await getImage({
+			src: twitter.image,
+			height: Math.min(twitter.image.height, 4096),
+			width: Math.min(twitter.image.width, 4096)
+		})
+	: undefined
+---
+
+{twitter?.card && <meta name="twitter:card" content={twitter.card} />}
+{twitter?.site && <meta name="twitter:site" content={twitter.site} />}
+{twitter?.siteId && <meta name="twitter:site:id" content={twitter.siteId} />}
+{twitter?.creator && <meta name="twitter:creator" content={twitter.creator} />}
+{twitter?.creatorId && <meta name="twitter:creator:id" content={twitter.creatorId} />}
+{twitter?.title && <meta name="twitter:title" content={twitter.title} />}
+{twitter?.description && <meta name="twitter:description" content={twitter.description} />}
+{twitterImage && <meta name="twitter:image" content={twitterImage.src} />}
+{twitterImage && twitter?.imageAlt && <meta name="twitter:image:alt" content={twitter.imageAlt} />}

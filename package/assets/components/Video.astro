@@ -1,0 +1,40 @@
+---
+import type { z } from "astro:content"
+import { videoEpisodeSchema, videoMovieSchema } from "./seo"
+
+type Props = {
+	video: z.infer<typeof videoMovieSchema> | z.infer<typeof videoEpisodeSchema>
+}
+const { video } = Astro.props
+
+// Is the video prop a video.episode
+const videoEpisode = video as z.infer<typeof videoEpisodeSchema>
+---
+
+{
+	video.actors &&
+		video.actors.map((actor) => (
+			<>
+				<meta property="video:actor" content={actor.profile} />
+				{actor.role && <meta property="video:actor:role" content={actor.role} />}
+			</>
+		))
+}
+{
+	video.directors &&
+		video.directors.map((director) => <meta property="video:director" content={director} />)
+}
+{video.writers && video.writers.map((writer) => <meta property="video:writer" content={writer} />)}
+{video.duration && <meta property="video:duration" content={video.duration.toString()} />}
+{
+	video.releaseDate && (
+		<meta
+			property="video:release_date"
+			content={
+				typeof video.releaseDate === "string" ? video.releaseDate : video.releaseDate.toISOString()
+			}
+		/>
+	)
+}
+{video.tags && video.tags.map((tag) => <meta property="video:tag" content={tag} />)}
+{videoEpisode.series && <meta property="video:series" content={videoEpisode.series} />}

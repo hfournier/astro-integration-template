@@ -1,8 +1,8 @@
 ## Checklist
 
 - [ ] Update all `TODO:`
-- [ ] Update all `package-name` occurences
-- [ ] Add a LICENSE.md at the root
+- [X] Update all `package-name` occurences
+- [X] Add a LICENSE.md at the root
 - [ ] Have gh cli installed
 - [ ] Work on the integration logic
 - [ ] Work on docs

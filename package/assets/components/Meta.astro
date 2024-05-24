@@ -1,0 +1,8 @@
+---
+interface Props extends astroHTML.JSX.MetaHTMLAttributes {
+	property?: string
+}
+const { property, ...attributes } = Astro.props
+---
+
+<meta property={property} {...attributes} />

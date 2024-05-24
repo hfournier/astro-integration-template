@@ -1,0 +1,11 @@
+---
+import { z } from "astro/zod"
+import { musicRadioStationSchema } from "./seo"
+
+type Props = {
+	music: z.infer<typeof musicRadioStationSchema>
+}
+const { music } = Astro.props
+---
+
+{music.creator && <meta property="music:creator" content={music.creator} />}

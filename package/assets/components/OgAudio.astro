@@ -1,0 +1,12 @@
+---
+import type { z } from "astro:content"
+import { ogAudioSchema } from "./seo"
+
+type Props = {
+	audio: z.infer<typeof ogAudioSchema>
+}
+const { audio } = Astro.props
+---
+
+{audio.url && <meta property="og:audio" content={audio.url} />}
+{audio.mimeType && <meta property="og:audio:type" content={audio.mimeType} />}

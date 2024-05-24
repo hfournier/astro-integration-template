@@ -1,0 +1,19 @@
+---
+import type { z } from "astro:content"
+import { ogOptionalSchema } from "./seo"
+
+type Props = {
+	optional: z.infer<typeof ogOptionalSchema>
+}
+const { optional } = Astro.props
+---
+
+{optional.description && <meta property="og:description" content={optional.description} />}
+{optional.determiner && <meta property="og:determiner" content={optional.determiner} />}
+{optional.locale && <meta property="og:locale" content={optional.locale} />}
+{
+	optional.localeAlternates?.map((locale: string) => (
+		<meta property="og:locale:alternate" content={locale} />
+	))
+}
+{optional.siteName && <meta property="og:site_name" content={optional.siteName} />}

@@ -1,0 +1,13 @@
+---
+import type { z } from "astro:content"
+import { profileSchema } from "./seo"
+
+type Props = {
+	profile: z.infer<typeof profileSchema>
+}
+const { profile } = Astro.props
+---
+
+{profile.firstName && <meta property="profile:first_name" content={profile.firstName} />}
+{profile.lastName && <meta property="profile:last_name" content={profile.lastName} />}
+{profile.username && <meta property="profile:username" content={profile.username} />}

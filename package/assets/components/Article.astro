@@ -1,0 +1,52 @@
+---
+import type { z } from "astro:content"
+import { articleSchema } from "./seo"
+
+type Props = {
+	article: z.infer<typeof articleSchema>
+}
+const { article } = Astro.props
+---
+
+{
+	article.publishedTime && (
+		<meta
+			property="article:published_time"
+			content={
+				typeof article.publishedTime === "string"
+					? article.publishedTime
+					: article.publishedTime.toISOString()
+			}
+		/>
+	)
+}
+{
+	article.modifiedTime && (
+		<meta
+			property="article:modified_time"
+			content={
+				typeof article.modifiedTime === "string"
+					? article.modifiedTime
+					: article.modifiedTime.toISOString()
+			}
+		/>
+	)
+}
+{
+	article.expirationTime && (
+		<meta
+			property="article:expiration_time"
+			content={
+				typeof article.expirationTime === "string"
+					? article.expirationTime
+					: article.expirationTime.toISOString()
+			}
+		/>
+	)
+}
+{
+	article.authors &&
+		article.authors.map((author) => <meta property="article:author" content={author} />)
+}
+{article.publisher && <meta property="article:publisher" content={article.publisher} />}
+{article.tags && article.tags.map((tag) => <meta property="article:tag" content={tag} />)}
