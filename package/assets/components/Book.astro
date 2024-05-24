@@ -1,11 +1,11 @@
 ---
-import type { z } from "astro:content"
-import { bookSchema } from "./seo"
+import type { z } from "astro:content";
+import type { bookSchema } from "../../src/seo.js";
 
 type Props = {
-	book: z.infer<typeof bookSchema>
-}
-const { book } = Astro.props
+	book: z.infer<typeof bookSchema>;
+};
+const { book } = Astro.props;
 ---
 
 {book.authors && book?.authors.map((author) => <meta property="book:author" content={author} />)}

@@ -1,18 +1,18 @@
 ---
-import { getImage } from "astro:assets"
+import { getImage } from "astro:assets";
 
 type Props = {
-	image: ImageMetadata
-	imageAlt?: string
-}
-const { image, imageAlt } = Astro.props
+	image: ImageMetadata;
+	imageAlt?: string;
+};
+const { image, imageAlt } = Astro.props;
 const ogImage = await getImage({
 	src: image,
 	height: Math.min(image.height, 630),
 	width: Math.min(image.width, 1200),
 	format: "jpg",
-	quality: 80
-})
+	quality: 80,
+});
 ---
 
 <meta

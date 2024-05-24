@@ -1,11 +1,11 @@
 ---
-import type { z } from "astro:content"
-import { ogVideoSchema } from "./seo"
+import type { z } from "astro:content";
+import type { ogVideoSchema } from "../../src/seo.js";
 
 type Props = {
-	video: z.infer<typeof ogVideoSchema>
-}
-const { video } = Astro.props
+	video: z.infer<typeof ogVideoSchema>;
+};
+const { video } = Astro.props;
 ---
 
 {video.url && <meta property="og:video" content={video.url} />}

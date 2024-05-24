@@ -1,4 +1,4 @@
-import { defineIntegration, addVirtualImports } from "astro-integration-kit";
+import { addVirtualImports, defineIntegration } from "astro-integration-kit";
 
 export const integration = defineIntegration({
 	name: "astro-seo-max",

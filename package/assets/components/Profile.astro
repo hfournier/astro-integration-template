@@ -1,11 +1,11 @@
 ---
-import type { z } from "astro:content"
-import { profileSchema } from "./seo"
+import type { z } from "astro:content";
+import type { profileSchema } from "../../src/seo.js";
 
 type Props = {
-	profile: z.infer<typeof profileSchema>
-}
-const { profile } = Astro.props
+	profile: z.infer<typeof profileSchema>;
+};
+const { profile } = Astro.props;
 ---
 
 {profile.firstName && <meta property="profile:first_name" content={profile.firstName} />}

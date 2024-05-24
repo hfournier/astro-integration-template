@@ -1,11 +1,11 @@
 ---
-import { z } from "astro/zod"
-import { musicAlbumSchema } from "./seo"
+import type { z } from "astro/zod";
+import type { musicAlbumSchema } from "../../src/seo.js";
 
 type Props = {
-	music: z.infer<typeof musicAlbumSchema>
-}
-const { music } = Astro.props
+	music: z.infer<typeof musicAlbumSchema>;
+};
+const { music } = Astro.props;
 ---
 
 {

@@ -1,19 +1,19 @@
 ---
-import { getImage } from "astro:assets"
-import { z } from "astro:content"
-import { twitterSchema } from "./seo"
+import { getImage } from "astro:assets";
+import type { z } from "astro:content";
+import type { twitterSchema } from "../../src/seo.js";
 
 type Props = {
-	twitter: z.infer<ReturnType<typeof twitterSchema>>
-}
-const { twitter } = Astro.props
+	twitter: z.infer<ReturnType<typeof twitterSchema>>;
+};
+const { twitter } = Astro.props;
 const twitterImage = twitter.image
 	? await getImage({
 			src: twitter.image,
 			height: Math.min(twitter.image.height, 4096),
-			width: Math.min(twitter.image.width, 4096)
+			width: Math.min(twitter.image.width, 4096),
 		})
-	: undefined
+	: undefined;
 ---
 
 {twitter?.card && <meta name="twitter:card" content={twitter.card} />}

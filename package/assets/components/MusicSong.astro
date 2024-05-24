@@ -1,11 +1,11 @@
 ---
-import { z } from "astro/zod"
-import { musicSongSchema } from "./seo"
+import type { z } from "astro/zod";
+import type { musicSongSchema } from "../../src/seo.js";
 
 type Props = {
-	music: z.infer<typeof musicSongSchema>
-}
-const { music } = Astro.props
+	music: z.infer<typeof musicSongSchema>;
+};
+const { music } = Astro.props;
 ---
 
 {music.duration && <meta property="music:duration" content={music.duration.toString()} />}

@@ -1,34 +1,34 @@
 ---
-import type { z } from "astro:content"
-import Article from "./Article.astro"
-import Book from "./Book.astro"
-import MusicAlbum from "./MusicAlbum.astro"
-import MusicPlaylist from "./MusicPlaylist.astro"
-import MusicRadioStation from "./MusicRadioStation.astro"
-import MusicSong from "./MusicSong.astro"
-import OgAudio from "./OgAudio.astro"
-import OgImage from "./OgImage.astro"
-import OgOptional from "./OgOptional.astro"
-import OgVideo from "./OgVideo.astro"
-import Profile from "./Profile.astro"
-import Twitter from "./Twitter.astro"
-import Video from "./Video.astro"
-import type { seoSchema } from "./seo"
+import type { z } from "astro:content";
+import type { seoSchema } from "../../src/seo.js";
+import Article from "./Article.astro";
+import Book from "./Book.astro";
+import MusicAlbum from "./MusicAlbum.astro";
+import MusicPlaylist from "./MusicPlaylist.astro";
+import MusicRadioStation from "./MusicRadioStation.astro";
+import MusicSong from "./MusicSong.astro";
+import OgAudio from "./OgAudio.astro";
+import OgImage from "./OgImage.astro";
+import OgOptional from "./OgOptional.astro";
+import OgVideo from "./OgVideo.astro";
+import Profile from "./Profile.astro";
+import Twitter from "./Twitter.astro";
+import Video from "./Video.astro";
 
-export type SeoType = z.infer<ReturnType<typeof seoSchema>>
+export type SeoType = z.infer<ReturnType<typeof seoSchema>>;
 type SeoOptions = {
-	siteName: string
-	defaults?: { charset?: string }
-	separator?: string
-}
+	siteName: string;
+	defaults?: { charset?: string };
+	separator?: string;
+};
 type Props = {
-	seo: SeoType
-	options?: SeoOptions
-}
+	seo: SeoType;
+	options?: SeoOptions;
+};
 
-const { seo, options } = Astro.props
+const { seo, options } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <title>

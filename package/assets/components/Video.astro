@@ -1,14 +1,14 @@
 ---
-import type { z } from "astro:content"
-import { videoEpisodeSchema, videoMovieSchema } from "./seo"
+import type { z } from "astro:content";
+import type { videoEpisodeSchema, videoMovieSchema } from "../../src/seo.js";
 
 type Props = {
-	video: z.infer<typeof videoMovieSchema> | z.infer<typeof videoEpisodeSchema>
-}
-const { video } = Astro.props
+	video: z.infer<typeof videoMovieSchema> | z.infer<typeof videoEpisodeSchema>;
+};
+const { video } = Astro.props;
 
 // Is the video prop a video.episode
-const videoEpisode = video as z.infer<typeof videoEpisodeSchema>
+const videoEpisode = video as z.infer<typeof videoEpisodeSchema>;
 ---
 
 {

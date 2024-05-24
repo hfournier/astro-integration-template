@@ -1,11 +1,11 @@
 ---
-import type { z } from "astro:content"
-import { articleSchema } from "./seo"
+import type { z } from "astro:content";
+import type { articleSchema } from "../../src/seo.js";
 
 type Props = {
-	article: z.infer<typeof articleSchema>
-}
-const { article } = Astro.props
+	article: z.infer<typeof articleSchema>;
+};
+const { article } = Astro.props;
 ---
 
 {

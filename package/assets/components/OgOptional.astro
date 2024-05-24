@@ -1,11 +1,11 @@
 ---
-import type { z } from "astro:content"
-import { ogOptionalSchema } from "./seo"
+import type { z } from "astro:content";
+import type { ogOptionalSchema } from "../../src/seo.js";
 
 type Props = {
-	optional: z.infer<typeof ogOptionalSchema>
-}
-const { optional } = Astro.props
+	optional: z.infer<typeof ogOptionalSchema>;
+};
+const { optional } = Astro.props;
 ---
 
 {optional.description && <meta property="og:description" content={optional.description} />}
