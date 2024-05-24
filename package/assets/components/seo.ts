@@ -206,7 +206,7 @@ export const twitterSchema = ({ image }: SchemaContext) =>
 			if (
 				twitter.card === "summary" &&
 				twitter.image &&
-				(twitter.image.height! < 144 || twitter.image.width! < 144)
+				(twitter.image.height < 144 || twitter.image.width < 144)
 			) {
 				ctx.addIssue({
 					code: z.ZodIssueCode.too_small,
@@ -219,7 +219,7 @@ export const twitterSchema = ({ image }: SchemaContext) =>
 			if (
 				twitter.card === "summary_large_image" &&
 				twitter.image &&
-				(twitter.image.height! < 157 || twitter.image.width! < 300)
+				(twitter.image.height < 157 || twitter.image.width < 300)
 			) {
 				ctx.addIssue({
 					code: z.ZodIssueCode.too_small,
