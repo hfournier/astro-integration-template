@@ -1,6 +1,6 @@
 ---
 import type { z } from "astro/zod";
-import type { musicAlbumSchema } from "../../src/seo.js";
+import type { musicAlbumSchema } from "../types/seo.js";
 
 type Props = {
 	music: z.infer<typeof musicAlbumSchema>;

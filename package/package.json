@@ -1,53 +1,57 @@
 {
-	"name": "astro-seo-max",
-	"version": "0.1.0",
-	"description": "Astro SEO Max allows developers to add SEO metadata to their Astro project without having to think about `<meta>` tags. Just enter the metadata into a type-safe prop in the frontmatter, pass it to the Seo component and astro-seo-max will handle the rest.",
-	"author": {
-		"email": "henri@henrifournier.dev",
-		"name": "Henri Fournier",
-		"url": "https://henrifournier.dev/"
-	},
-	"license": "MIT",
-	"keywords": [
-		"astro-integration",
-		"astro-component",
-		"withastro",
-		"astro",
-		"seo",
-		"seo max"
-	],
-	"homepage": "https://henrifournier.dev/blog/astro-seo-max",
-	"bugs": {
-		"url": "https://github.com/hfournier/astro-seo-max/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/hfournier/astro-seo-max"
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"sideEffects": false,
-	"exports": {
-		".": {
-			"types": "./dist/index.d.ts",
-			"default": "./dist/index.js"
-		},
-		"./components/SeoMax.astro": "./assets/components/SeoMax.astro"
-	},
-	"files": ["dist", "assets"],
-	"scripts": {
-		"dev": "tsup --watch",
-		"build": "tsup"
-	},
-	"type": "module",
-	"peerDependencies": {
-		"astro": "^4.0.0"
-	},
-	"dependencies": {
-		"astro-integration-kit": "^0.13.2"
-	},
-	"devDependencies": {
-		"tsup": "^8.0.2"
-	}
+  "name": "astro-seo-max",
+  "version": "0.1.0",
+  "description": "Astro SEO Max allows developers to add SEO metadata to their Astro project without having to think about `<meta>` tags. Just enter the metadata into a type-safe prop in the frontmatter, pass it to the Seo component and astro-seo-max will handle the rest.",
+  "author": {
+    "email": "henri@henrifournier.dev",
+    "name": "Henri Fournier",
+    "url": "https://henrifournier.dev/"
+  },
+  "license": "MIT",
+  "keywords": [
+    "astro-integration",
+    "astro-component",
+    "withastro",
+    "astro",
+    "seo",
+    "seo max"
+  ],
+  "homepage": "https://henrifournier.dev/blog/astro-seo-max",
+  "bugs": {
+    "url": "https://github.com/hfournier/astro-seo-max/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hfournier/astro-seo-max"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./components": "./assets/components/index.ts",
+    "./types": "./assets/types/index.ts"
+  },
+  "files": [
+    "dist",
+    "assets"
+  ],
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "astro": "^4.0.0"
+  },
+  "dependencies": {
+    "astro-integration-kit": "^0.13.2"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.2"
+  }
 }

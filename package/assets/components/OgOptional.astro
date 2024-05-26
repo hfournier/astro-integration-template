@@ -1,6 +1,6 @@
 ---
 import type { z } from "astro:content";
-import type { ogOptionalSchema } from "../../src/seo.js";
+import type { ogOptionalSchema } from "../types/seo.js";
 
 type Props = {
 	optional: z.infer<typeof ogOptionalSchema>;

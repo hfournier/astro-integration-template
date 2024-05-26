@@ -1,19 +1,24 @@
 ---
 import { getImage } from "astro:assets";
 import type { z } from "astro:content";
-import type { twitterSchema } from "../../src/seo.js";
+import type { DefaultImageType, twitterSchema } from "../types/seo";
 
 type Props = {
 	twitter: z.infer<ReturnType<typeof twitterSchema>>;
+	defaultImage: DefaultImageType;
 };
-const { twitter } = Astro.props;
+const { twitter, defaultImage } = Astro.props;
 const twitterImage = twitter.image
 	? await getImage({
 			src: twitter.image,
 			height: Math.min(twitter.image.height, 4096),
 			width: Math.min(twitter.image.width, 4096),
 		})
-	: undefined;
+	: defaultImage && defaultImage.image ? await getImage({
+			src: defaultImage.image,
+			height: Math.min(defaultImage.image.height, 4096),
+			width: Math.min(defaultImage.image.width, 4096),
+		}) : undefined;
 ---
 
 {twitter?.card && <meta name="twitter:card" content={twitter.card} />}
@@ -24,4 +29,4 @@ const twitterImage = twitter.image
 {twitter?.title && <meta name="twitter:title" content={twitter.title} />}
 {twitter?.description && <meta name="twitter:description" content={twitter.description} />}
 {twitterImage && <meta name="twitter:image" content={twitterImage.src} />}
-{twitterImage && twitter?.imageAlt && <meta name="twitter:image:alt" content={twitter.imageAlt} />}
+{twitterImage && (twitter?.imageAlt || defaultImage?.alt) && <meta name="twitter:image:alt" content={twitter.imageAlt || defaultImage?.alt} />}

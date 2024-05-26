@@ -1,6 +1,6 @@
 ---
-import type { z } from "astro:content";
-import type { seoSchema } from "../../src/seo.js";
+import config from "virtual:astro-seo-max/config";
+import type { SeoMaxType } from "../types";
 import Article from "./Article.astro";
 import Book from "./Book.astro";
 import MusicAlbum from "./MusicAlbum.astro";
@@ -14,34 +14,61 @@ import OgVideo from "./OgVideo.astro";
 import Profile from "./Profile.astro";
 import Twitter from "./Twitter.astro";
 import Video from "./Video.astro";
+import type { DefaultImageType } from "../types/seo";
 
-export type SeoType = z.infer<ReturnType<typeof seoSchema>>;
-type SeoOptions = {
-	siteName: string;
-	defaults?: { charset?: string };
-	separator?: string;
-};
 type Props = {
-	seo: SeoType;
-	options?: SeoOptions;
+	seo: SeoMaxType;
 };
 
-const { seo, options } = Astro.props;
+const { seo } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : Astro.url.href;
+
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/*.{jpeg,jpg,png,gif}');
+
+let defaultOgImage: DefaultImageType;
+const defaultOgImagePath = config.site?.defaultImages?.openGraph?.imagePath;
+const defaultOgImageAlt = config.site?.defaultImages?.openGraph?.imageAlt;
+if (defaultOgImagePath) {
+	if (!images[defaultOgImagePath]) {
+		throw new Error(`The default Open Graph image: "${defaultOgImagePath}" does not exist in glob: "src/assets/*.{jpeg,jpg,png,gif}"`)
+	}
+	else {
+		defaultOgImage = {image: (await images[defaultOgImagePath]!()).default, alt: defaultOgImageAlt || undefined};
+		if (defaultOgImage.image.height < 200 || defaultOgImage.image.width < 200) {
+			throw new Error(`The default Open Graph image: "${defaultOgImagePath}" is too small. The minimum allowed Open Graph image dimension is 200 x 200 pixels`)
+		}
+	};
+}
+
+// let defaultTwitterImage: ImageMetadata | undefined
+let defaultTwitterImage: DefaultImageType;
+const defaultTwitterImagePath = config.site?.defaultImages?.twitter?.imagePath;
+const defaultTwitterImageAlt = config.site?.defaultImages?.twitter?.imageAlt;
+if (defaultTwitterImagePath) {
+	if (!images[defaultTwitterImagePath]) {
+		throw new Error(`The default Twitter image: "${defaultTwitterImagePath}" does not exist in glob: "src/assets/*.{jpeg,jpg,png,gif}"`)
+	}
+	else {
+		defaultTwitterImage = {image: (await images[defaultTwitterImagePath]!()).default, alt: defaultTwitterImageAlt || undefined};
+		if (defaultTwitterImage.image.height < 144 || defaultTwitterImage.image.width < 144) {
+			throw new Error(`The default Twitter image: "${defaultTwitterImagePath}" is too small. The minimum allowed Twitter image dimension is 144 x 144 pixels`)
+		}
+	};
+}
 ---
 
 <title>
 	{seo.title}
 	{
-		options?.siteName && !seo.title?.endsWith(options?.siteName)
-			? ` ${options.separator || "|"} ${options.siteName}`
+		config.site?.name && !seo.title?.endsWith(config.site?.name)
+			? ` ${config.site?.separator || "|"} ${config.site?.name}`
 			: ""
 	}
 </title>
 <meta name="description" content={seo.description} />
-<meta charset={seo.charset || options?.defaults?.charset || "utf-8"} />
-<link rel="canonical" href={seo.canonical || canonicalURL} />
+<meta charset={seo.charset || config.site?.charset || "utf-8"} />
+{ seo.canonical || canonicalURL && (<link rel="canonical" href={seo.canonical || canonicalURL} />)}
 
 {
 	(seo.noFollow || seo.noIndex) && (
@@ -60,8 +87,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 			<meta property="og:url" content={seo.openGraph.url || Astro.url.href} />
 
 			{seo.openGraph.optional && <OgOptional optional={seo.openGraph.optional} />}
-			{seo.openGraph.image && (
-				<OgImage image={seo.openGraph.image} imageAlt={seo.openGraph.imageAlt || ""} />
+			{(seo.openGraph.image || defaultOgImage) && (
+				<OgImage image={seo.openGraph.image} imageAlt={seo.openGraph.imageAlt || ""} defaultImage={defaultOgImage} />
 			)}
 			{seo.openGraph.audio && <OgAudio audio={seo.openGraph.audio} />}
 			{seo.openGraph.video && <OgVideo video={seo.openGraph.video} />}
@@ -98,4 +125,4 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 	)
 }
 
-{seo.twitter && <Twitter twitter={seo.twitter} />}
+{seo.twitter && <Twitter twitter={seo.twitter} defaultImage={defaultTwitterImage ? defaultTwitterImage : undefined} />}

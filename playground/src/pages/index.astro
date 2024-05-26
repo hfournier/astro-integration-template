@@ -1,11 +1,27 @@
 ---
-import config from "virtual:astro-seo-max/config";
 import Card from "../components/Card.astro";
 import Layout from "../layouts/Layout.astro";
-console.log(config.foo);
+import { SeoMax } from "astro-seo-max/components";
+import type { SeoMaxType } from "astro-seo-max/types";
+import change from "@assets/lots-of-change.jpg";
+const seo: SeoMaxType = {
+	title: "Home Page with SeoMax",
+	description: "This is a description of my home page",
+	openGraph: {
+		title: "Home Page with SeoMax",
+		type: "website",
+		// image: change
+	},
+	twitter: {
+		card: "summary_large_image",
+		site: "@your-site",
+		creator: "@username",
+	},
+}
 ---
 
 <Layout title="Welcome to Astro.">
+	<SeoMax {seo} slot="head" />
 	<main>
 		<svg
 			class="astro-a"
@@ -35,12 +51,11 @@ console.log(config.foo);
 				</linearGradient>
 			</defs>
 		</svg>
-		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
+		<h1>Welcome to <span class="text-gradient">Astro SEO Max</span></h1>
 		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
+			Read my <a href="/blog/first-blog">first blog post</a>
 		</p>
-		<ul role="list" class="link-card-grid">
+		<!-- <ul role="list" class="link-card-grid">
 			<Card
 				href="https://docs.astro.build/"
 				title="Documentation"
@@ -61,7 +76,7 @@ console.log(config.foo);
 				title="Community"
 				body="Come say hi to our amazing Discord community. ❤️"
 			/>
-		</ul>
+		</ul> -->
 	</main>
 </Layout>
 
@@ -85,7 +100,7 @@ console.log(config.foo);
 		z-index: -1;
 	}
 	h1 {
-		font-size: 4rem;
+		font-size: 3rem;
 		font-weight: 700;
 		line-height: 1;
 		text-align: center;
@@ -115,6 +130,9 @@ console.log(config.foo);
 	}
 	.instructions strong {
 		color: rgb(var(--accent-light));
+	}
+	.instructions a {
+		text-decoration: underline;
 	}
 	.link-card-grid {
 		display: grid;

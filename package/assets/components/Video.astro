@@ -1,6 +1,6 @@
 ---
 import type { z } from "astro:content";
-import type { videoEpisodeSchema, videoMovieSchema } from "../../src/seo.js";
+import type { videoEpisodeSchema, videoMovieSchema } from "../types/seo.js";
 
 type Props = {
 	video: z.infer<typeof videoMovieSchema> | z.infer<typeof videoEpisodeSchema>;

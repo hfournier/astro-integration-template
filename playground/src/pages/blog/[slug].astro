@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { SeoMax } from 'astro-seo-max/components';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map(entry => ({
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<Layout title={entry.data.title}>
+  {entry.data.seo && <SeoMax seo={entry.data.seo} slot="head" />}
+  <main>
+    <h1>{entry.data.title}</h1>
+    <Content />
+  </main>
+</Layout>
+
+<style>
+	main {
+		margin: auto;
+		padding: 1rem;
+		width: 800px;
+		max-width: calc(100% - 2rem);
+		color: white;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+	h1 {
+		font-size: 4rem;
+		font-weight: 700;
+		line-height: 1;
+		text-align: center;
+		margin-bottom: 1em;
+        color: blueviolet
+	}
+	h2 {
+		font-size: 2rem;
+		font-weight: 500;
+		line-height: 1;
+		margin-bottom: 1em;
+	}
+</style>

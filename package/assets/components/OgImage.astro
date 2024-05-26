@@ -1,32 +1,45 @@
 ---
 import { getImage } from "astro:assets";
+import type { DefaultImageType } from "../types/seo";
 
 type Props = {
 	image: ImageMetadata;
 	imageAlt?: string;
+	defaultImage: DefaultImageType;
 };
-const { image, imageAlt } = Astro.props;
-const ogImage = await getImage({
+const { image, imageAlt, defaultImage } = Astro.props;
+
+const ogImage = image ? await getImage({
 	src: image,
 	height: Math.min(image.height, 630),
 	width: Math.min(image.width, 1200),
 	format: "jpg",
 	quality: 80,
-});
+}) : defaultImage ? await getImage({
+	src: defaultImage.image,
+	height: Math.min(defaultImage.image.height, 630),
+	width: Math.min(defaultImage.image.width, 1200),
+	format: "jpg",
+	quality: 80,
+}) : undefined;
 ---
 
-<meta
-	property="og:image"
-	content={ogImage.src.startsWith("https") ? ogImage.src : `${Astro.url.origin}${ogImage.src}`}
-/>
-<meta
-	property="og:image:url"
-	content={ogImage.src.startsWith("https") ? ogImage.src : `${Astro.url.origin}${ogImage.src}`}
-/>
-<meta
-	property="og:image:type"
-	content=`image/${ogImage.options.format === "jpg" ? "jpeg" : ogImage.options.format === "svg" ? "svg+xml" : ogImage.options.format}`
-/>
-<meta property="og:image:width" content={ogImage.options.width?.toString()} />
-<meta property="og:image:height" content={ogImage.options.height?.toString()} />
-{imageAlt && <meta property="og:image:alt" content={imageAlt} />}
+{ ogImage &&
+	<>
+		<meta
+			property="og:image"
+			content={ogImage.src.startsWith("https") ? ogImage.src : `${Astro.url.origin}${ogImage.src}`}
+		/>
+		<meta
+			property="og:image:url"
+			content={ogImage.src.startsWith("https") ? ogImage.src : `${Astro.url.origin}${ogImage.src}`}
+		/>
+		<meta
+			property="og:image:type"
+			content={`image/${ogImage.options.format === "jpg" ? "jpeg" : ogImage.options.format === "svg" ? "svg+xml" : ogImage.options.format}`}
+		/>
+		<meta property="og:image:width" content={ogImage.options.width?.toString()} />
+		<meta property="og:image:height" content={ogImage.options.height?.toString()} />
+		{imageAlt && <meta property="og:image:alt" content={imageAlt} />}
+	</>
+}

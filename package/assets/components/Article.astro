@@ -1,6 +1,6 @@
 ---
 import type { z } from "astro:content";
-import type { articleSchema } from "../../src/seo.js";
+import type { articleSchema } from "../types/seo.js";
 
 type Props = {
 	article: z.infer<typeof articleSchema>;
